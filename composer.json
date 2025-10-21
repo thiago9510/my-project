@@ -1,0 +1,15 @@
+{
+    "name": "thiago/my-project",
+    "autoload": {
+        "psr-4": {
+            "MyProject\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "thiago9510",
+            "email": "thiagobatistalucas@gmail.com"
+        }
+    ],
+    "require": {}
+}
