@@ -42,7 +42,9 @@
 
 <p>Verifique se foi instalado corretamente:</p>
 
-```bash php -m | grep pdo ```
+```bash
+ php -m | grep pdo
+```
 
 ##### Configurando a conexão PDO:
 

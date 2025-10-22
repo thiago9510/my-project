@@ -11,5 +11,13 @@
             "email": "thiagobatistalucas@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "ext-pdo_mysql": "*"
+
+    },
+    "scripts": {
+        "dev": "php -S localhost:8000 -t public",
+        "dump": "composer dump-autoload"
+
+    }
 }

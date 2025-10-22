@@ -13,7 +13,12 @@ class Router {
         $path = rtrim(parse_url($uri, PHP_URL_PATH), "/");
 
         foreach($this->routes as [$routeMethod, $routePath, $handler]) {
-            if ($routeMethod === $method && $routePath === $path) {
+
+            $pattern = preg_replace('#\{[^\}]+\}#', '([^/]+)', $routePath);
+            $pattern = "#^" . rtrim($pattern, '/') . "$#";
+            
+            if ($routeMethod === $method && preg_match($pattern, $path, $matches)) {
+                array_shift($matches); // remove o match completo
                 [$controllerClass, $action] = explode('@', $handler);
                 $controller = new $controllerClass();              
                 return $controller->$action();
