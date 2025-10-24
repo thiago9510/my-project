@@ -1,5 +1,5 @@
 <?php
-namespace MyProject\services;
+/* namespace MyProject\services;
 
 use MyProject\models\PersonModel;
 
@@ -14,3 +14,4 @@ class PersonService {
         return $this->model->getAll();
     }
 }
+ */

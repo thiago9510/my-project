@@ -1,5 +1,5 @@
 <?php
-namespace MyProject\controllers;
+/* namespace MyProject\controllers;
 
 use MyProject\core\http\Request;
 use MyProject\core\http\Response;
@@ -17,7 +17,7 @@ class PersonApiController {
         return Response::success($persons);
     }
 
-/*     public function show(Request $request) {
+       public function show(Request $request) {
         $id = $request->param('id');
 
         if (!is_numeric($id)) {
@@ -52,5 +52,5 @@ class PersonApiController {
         }
 
         return Response::success("Pessoa deletada com sucesso");
-    } */
-}
+    }
+} */
