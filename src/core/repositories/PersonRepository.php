@@ -55,8 +55,8 @@ class PersonRepository {
             ORDER BY id ASC
             LIMIT :limit OFFSET :offset
         ");
-        $stmt->bindValue('limit', $limit, PDO::PARAM_INT);
-        $stmt->bindValue('offset', $offset, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
 
         $rows = $stmt->fetchAll();
@@ -130,8 +130,8 @@ class PersonRepository {
         $sql .= " ORDER BY id ASC LIMIT :limit OFFSET :offset";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue('limit', $limit, PDO::PARAM_INT);
-        $stmt->bindValue('offset', $offset, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 
         foreach ($params as $key => $value) {
             $stmt->bindValue($key, $value);
@@ -173,30 +173,47 @@ class PersonRepository {
     public function findFilteredCursor(array $filters, ?int $lastId = null, int $limit = 10): array {
         $sql = "SELECT * FROM persons WHERE deleted_at IS NULL";
 
+        // INICIO SETA A SQL DO FILTRO //
         if (!empty($filters['name'])) {
             $sql .= " AND name LIKE :name";
         }
-
+        if (!empty($filters['email'])) {
+            $sql .= " AND email LIKE :email";
+        }
+        if (!empty($filters['created_at'])) {
+            $sql .= " AND created_at LIKE :created_at";
+        }                
         if ($lastId !== null) {
             $sql .= " AND id > :lastId";
         }
-
+        // FIM SETA A SQL DO FILTRO //
+        
         $sql .= " ORDER BY id ASC LIMIT :limit";
 
         $stmt = $this->db->prepare($sql);
 
+        //  INICIO SUBISTITUI O VALOR DINÂMICO DO FILTRO //
         if (!empty($filters['name'])) {
-            $stmt->bindValue('name', '%' . $filters['name'] . '%');
+            $stmt->bindValue(':name', '%' . $filters['name'] . '%');
         }
-
+        if (!empty($filters['email'])) {
+            $stmt->bindValue(':email', '%' . $filters['email'] . '%');
+        }
+        if (!empty($filters['created_at'])) {
+            $stmt->bindValue(':created_at', '%' . $filters['created_at'] . '%');
+        }
         if ($lastId !== null) {
-            $stmt->bindValue('lastId', $lastId, PDO::PARAM_INT);
+            $stmt->bindValue(':lastId', $lastId, PDO::PARAM_INT);
         }
-
-        $stmt->bindValue('limit', $limit, PDO::PARAM_INT);
-
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        //  INICIO SUBISTITUI O VALOR DINÂMICO DO FILTRO //
+        
+        // EXECUTA QUERY NO BANCO DE DADOS //
+        // Sempre que usar prepare(), você precisa chamar execute() para realmente rodar a SQL.
         $stmt->execute();
 
+        // RETORNA DADOS APÓS A CONSULTA
+        //é um método do PDOStatement que retorna todos os resultados de uma consulta SQL em forma de array.
         $rows = $stmt->fetchAll();
         return $this->mapRows($rows);
     }
