@@ -15,3 +15,12 @@ class PersonService {
     }
 }
  */
+
+namespace MyProject\modules\persons\services;
+use MyProject\core\entities\PersonEntity;
+
+//use MyProject\core\repositories\PersonRepository;
+
+class PersonService {
+
+}

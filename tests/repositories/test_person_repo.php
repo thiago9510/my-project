@@ -35,8 +35,42 @@ if ($pessoa) {
 print_r(get_class_methods($pessoas[0])); */
 
 
-$filter = ['name' => 'thiago'];
-$lastId = 1;
+$filter = [
+    'name' => 'thiago',
+    'email' => 'thiago'
+];
 
-$result = $repo->findFilteredCursor($filter,$lastId,1);
-print_r($result);
+$lastId = 0;
+$limit = 10;
+$result = $repo->findFilteredCursor($filter,$lastId, $limit + 1);
+$hasMore = count($result ) > $limit;
+
+// corta uma parte de um array, retornando apenas os elementos desejados
+$data = array_slice($result , 0,  $limit);
+
+
+//print_r
+$response = [
+    'data' => $data,
+    'limit' => $limit,
+    'lastId' => end($data)?->getId(),
+    'hasMore' => $hasMore,
+    'total' => $repo->countFilteredCursor($filter)
+];
+
+var_export($response);
+
+
+
+/*
+Exemplo de retorno
+
+return [
+  'data' => $data,
+  'limit' => $limit,
+  'lastId' => end($data)?->getId(),
+  'hasMore' => $hasMore,
+  'total' => $repo->countFilteredCursos($filters)
+] 
+  
+*/

@@ -1,12 +1,12 @@
 <?php
-/* namespace MyProject\controllers;
+ namespace MyProject\modules\persons\controllers;
 
 use MyProject\core\http\Request;
 use MyProject\core\http\Response;
-use MyProject\services\PersonService;
+//use MyProject\modules\persons\controllers\services\PersonService;
 
 class PersonApiController {
-    private PersonService $service;
+/*     private PersonService $service;
 
     public function __construct() {
         $this->service = new PersonService();
@@ -52,5 +52,5 @@ class PersonApiController {
         }
 
         return Response::success("Pessoa deletada com sucesso");
-    }
-} */
+    } */
+} 

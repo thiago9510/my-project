@@ -49,6 +49,7 @@ class PersonRepository {
     * @return PersonEntity[]
     */
     public function findPaginated(int $limit = 10, int $offset = 0): array {
+        // Busca tudo da tabela (sem filtros) consigerando paginação (offset)
         $stmt = $this->db->prepare("
             SELECT * FROM persons
             WHERE deleted_at IS NULL
@@ -219,7 +220,7 @@ class PersonRepository {
     }
 
     // total com filtros para o cursos
-    public function countFilteredCursos(array $filters = []): int {
+    public function countFilteredCursor(array $filters = []): int {
     $sql = "SELECT COUNT(*) as total FROM persons WHERE deleted_at IS NULL";
     $params = [];
 
@@ -227,12 +228,16 @@ class PersonRepository {
         $sql .= " AND name LIKE :name";
         $params['name'] = '%' . $filters['name'] . '%';
     }
-
-    if (!empty($filters['status'])) {
-        $sql .= " AND status = :status";
-        $params['status'] = $filters['status'];
+    if (!empty($filters['email'])) {
+        $sql .= " AND email LIKE :email";
+        $params['email'] = '%' . $filters['email'] . '%';
+    }    
+    if (!empty($filters['created_at'])) {
+        $sql .= " AND created_at LIKE :created_at";
+        $params['created_at'] = '%' . $filters['created_at'] . '%';
     }
-
+    
+    
     $stmt = $this->db->prepare($sql);
     $stmt->execute($params);
 

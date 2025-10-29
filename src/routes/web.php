@@ -1,28 +1,25 @@
 <?php
-use MyProject\controllers\PersonController;
-
+use MyProject\modules\persons\controllers\PersonPageController;
+use MyProject\modules\persons\controllers\PersonApiController;
+use MyProject\modules\home\controllers\HomePageController;
 return [
     [
         'method' => 'GET',
+        'path' => '/',
+        'handler' => [HomePageController::class, 'index']
+    ],
+
+    [
+        'method' => 'GET',
         'path' => '/persons',
-        'handler' => [PersonController::class, 'listAll']
+        'handler' => [PersonPageController::class, 'index']
     ],
+
+    // exemple
     [
         'method' => 'GET',
         'path' => '/api/persons/{id}',
-        'handler' => [PersonController::class, 'apiListOne']
-        //'middleware' => [AuthMiddleware::class]
-    ],
-    [
-        'method' => 'POST',
-        'path' => '/api/persons',
-        'handler' => [PersonController::class, 'create']
-        //'middleware' => [AuthMiddleware::class, ValidationMiddleware::class]
-    ],
-    [
-        'method' => 'GET',
-        'path' => '/api/persons/{id}',
-        'handler' => [PersonController::class, 'apiListOne']
+        'handler' => [PersonApiController::class, 'apiListOne']
         //'middleware' => [AuthMiddleware::class]
     ]
 ];
