@@ -12,6 +12,11 @@ const persons = [
         id: 2,
         name: 'diego',
         email: 'diego@gmail.com'
+    },
+    {
+        id: 3,
+        name: 'josiel',
+        email: 'josiel@gmail.com'
     }
 ];
 
